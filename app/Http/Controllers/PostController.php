@@ -34,6 +34,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        //this helps us view what is inside a 
        dd($request->all());
     }
 
