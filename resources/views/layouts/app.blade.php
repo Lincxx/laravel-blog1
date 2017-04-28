@@ -11,7 +11,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet"> 
+    <link href="{{ asset('css/toastr.min.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -80,24 +81,49 @@
         
        <div class="container">
            <div class="row">
-               <div class="col-md-4">
+            @if(Auth::check())
+              <div class="col-md-4">
                    <ul class="list-group">
                         <li class="list-group-item">
-                            <a href="/home" title="">Home</a>
+                            <a href="{{ route('home')}}" title="">Home</a>
                         </li>
                         <li class="list-group-item">
-                            <a href="/post/create" title="">Create new post</a>
+                            <a href="{{ route('posts') }}" title="">View All Posts</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{{ route('post.create') }}" title="">Create New Post</a>
+                        </li>
+                         <li class="list-group-item">
+                            <a href="{{ route('category.create') }}" title="">Create New Category</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{{ route('categories') }}" title="">View All Categories</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{{ route('posts.trashed') }}" title="">All Trashed Posts</a>
                         </li>
                    </ul>
-               </div>
-               <div class="col-md-8">
-                   @yield('content')
-               </div>
+               </div>  
+            @endif
+            <div class="col-md-8">
+                @yield('content')
+            </div>
+            
+              
            </div>
        </div>
     </div>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/toastr.min.js') }}"></script>
+    <script>
+        @if(Session::has('success'))
+            toastr.success("{{Session::get('success')}}")
+        @endif
+        @if(Session::has('info'))
+            toastr.info("{{Session::get('info')}}")
+        @endif
+    </script>
 </body>
 </html>
